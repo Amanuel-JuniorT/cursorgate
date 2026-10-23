@@ -1,0 +1,11 @@
+node_modules/
+dist/
+dev-dist/
+.DS_Store
+*.log
+.env
+.env.*
+packages/pwa/dist/
+packages/shared/dist/
+
+.cursor/hooks.json

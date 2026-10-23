@@ -1,0 +1,19 @@
+{
+  "name": "@companion/daemon",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "bin": {
+    "companion": "bin/cli.js"
+  },
+  "scripts": {
+    "build": "node scripts/bundle-gate.js",
+    "dev": "node bin/cli.js daemon",
+    "start": "node bin/cli.js daemon",
+    "doctor": "node bin/cli.js doctor",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "@companion/shared": "0.1.0"
+  }
+}

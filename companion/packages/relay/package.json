@@ -1,0 +1,20 @@
+{
+  "name": "@companion/relay",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "bin": {
+    "companion-relay": "bin/relay.js"
+  },
+  "scripts": {
+    "build": "node -e \"console.log('relay: no build step')\"",
+    "dev": "node bin/relay.js",
+    "start": "node bin/relay.js",
+    "test": "node --test test/*.test.js"
+  },
+  "dependencies": {
+    "@companion/shared": "0.1.0",
+    "web-push": "^3.6.7",
+    "ws": "^8.18.0"
+  }
+}

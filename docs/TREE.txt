@@ -1,0 +1,19 @@
+cursorgate-handoff/
+├── HANDOFF.md                          # Full context for the next Cursor chat
+├── TREE.txt                            # This file
+├── 01-machine-config/
+│   └── companion.json                  # Copy of ~/.companion.json (SECRETS — do not commit)
+├── 02-companion-kit/                   # Copy of ~/.cursor/companion/
+│   ├── init.js                         # Per-project scaffold command
+│   ├── gate.js                         # Template copied by init
+│   └── hooks.json                      # Template hooks.json
+└── 03-project-prototype/               # What lived under CRM/.cursor/ during testing
+    └── .cursor/
+        ├── CURSORGATE_CLI_SPEC.md      # Spec to implement next (cursorgate CLI)
+        ├── hooks.json                  # Project hook registration
+        └── hooks/
+            └── gate.js                 # Working gate runtime (source of truth for behavior)
+
+Intentionally OMITTED from this pack:
+  - CRM/.cursor/hooks/log.jsonl  (early debug logger; contains user_email — do not copy)
+  - ~/gate-debug.log             (runtime log; regenerates; may be large)

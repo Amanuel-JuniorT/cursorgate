@@ -1,0 +1,22 @@
+{
+  "name": "companion",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Cursor companion — phone PWA + PC daemon (Full B)",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "npm run build -w @companion/shared && npm run build -w @companion/relay && npm run build -w @companion/daemon && npm run build -w @companion/pwa",
+    "dev:relay": "npm run dev -w @companion/relay",
+    "dev:daemon": "npm run dev -w @companion/daemon",
+    "dev:pwa": "npm run dev -w @companion/pwa",
+    "start:relay": "npm run start -w @companion/relay",
+    "start:daemon": "npm run start -w @companion/daemon",
+    "test": "npm run test -w @companion/shared && npm run test -w @companion/daemon && npm run test -w @companion/relay",
+    "doctor": "npm run doctor -w @companion/daemon"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

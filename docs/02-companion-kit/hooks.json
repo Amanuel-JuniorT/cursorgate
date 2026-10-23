@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeShellExecution": [
+      {
+        "command": "node .cursor/hooks/gate.js",
+        "timeout": 86400
+      }
+    ]
+  }
+}
