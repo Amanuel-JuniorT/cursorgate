@@ -1,0 +1,290 @@
+:root {
+  --bg: #0f1419;
+  --elev: #1a2332;
+  --soft: #243044;
+  --text: #e7eef8;
+  --muted: #8b9bb4;
+  --accent: #3d9cf0;
+  --ok: #7dd3a0;
+  --danger: #f07178;
+  --warn: #e6c07b;
+  --radius: 12px;
+  --font: "Segoe UI", system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 16px 18px 24px;
+  font-family: var(--font);
+  background: radial-gradient(ellipse 80% 50% at 50% -20%, #1e3a5f55, transparent),
+    var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.brand {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--danger);
+  display: inline-block;
+}
+.dot.on {
+  background: var(--ok);
+}
+.dot.partial {
+  background: var(--warn);
+}
+
+.top-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.tabs {
+  display: flex;
+  gap: 4px;
+  background: var(--elev);
+  padding: 4px;
+  border-radius: 999px;
+  margin: 14px 0;
+  flex-wrap: wrap;
+}
+
+.tabs button {
+  flex: 1;
+  min-width: 72px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  padding: 8px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+}
+
+.tabs button.active {
+  background: var(--soft);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.panel {
+  display: none;
+}
+.panel.active {
+  display: block;
+}
+
+.card {
+  background: var(--elev);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+}
+
+.card h2 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+.meta {
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.45;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  margin: 10px 0 0;
+}
+
+.btn {
+  border: 0;
+  border-radius: 10px;
+  padding: 9px 14px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  background: var(--soft);
+  color: var(--text);
+}
+
+.btn.accent {
+  background: var(--accent);
+  color: #041018;
+}
+
+.btn.muted {
+  background: var(--soft);
+  color: var(--text);
+  margin-top: 8px;
+}
+
+.btn.danger {
+  background: var(--danger);
+  color: #1a0b0c;
+  margin-top: 16px;
+  width: 100%;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.list {
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  background: #0c1017;
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.row .title {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.row .sub {
+  font-size: 0.75rem;
+  color: var(--muted);
+  word-break: break-all;
+}
+
+.badge {
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--soft);
+  color: var(--muted);
+  margin-left: 6px;
+  vertical-align: middle;
+}
+.badge.on {
+  color: var(--ok);
+}
+
+.title .dot {
+  width: 8px;
+  height: 8px;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.pair-box {
+  margin-top: 14px;
+  padding: 14px;
+  background: #0c1017;
+  border-radius: 10px;
+}
+
+.pair-box .code {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  font-variant-numeric: tabular-nums;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 12px 0 4px;
+  font-size: 0.95rem;
+}
+
+.toast {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--soft);
+  color: var(--text);
+  padding: 10px 16px;
+  border-radius: 10px;
+  font-size: 0.85rem;
+  max-width: 90%;
+  box-shadow: 0 8px 24px #0008;
+}
+
+.log-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 10px 0 12px;
+}
+
+.log-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+@media (max-width: 700px) {
+  .log-cols {
+    grid-template-columns: 1fr;
+  }
+}
+
+.log-pane {
+  min-width: 0;
+}
+
+.log-head {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.log-view {
+  margin: 0;
+  height: 340px;
+  overflow: auto;
+  background: #0c1017;
+  border-radius: 10px;
+  padding: 10px 12px;
+  font-family: ui-monospace, Consolas, monospace;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #c5d0e0;
+}

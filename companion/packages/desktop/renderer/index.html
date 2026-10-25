@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Companion</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="top">
+      <div class="brand">
+        <span id="svc-dot" class="dot off"></span>
+        Companion
+      </div>
+      <div class="top-actions">
+        <button type="button" id="btn-start" class="btn">Start</button>
+        <button type="button" id="btn-stop" class="btn muted">Stop</button>
+      </div>
+    </header>
+
+    <p id="svc-line" class="meta">Starting services…</p>
+
+    <nav class="tabs">
+      <button type="button" data-tab="overview" class="active">Overview</button>
+      <button type="button" data-tab="pair">Pair</button>
+      <button type="button" data-tab="devices">Devices</button>
+      <button type="button" data-tab="projects">Projects</button>
+      <button type="button" data-tab="logs">Logs</button>
+      <button type="button" data-tab="settings">Settings</button>
+    </nav>
+
+    <section id="tab-overview" class="panel active">
+      <div class="card">
+        <h2>Status</h2>
+        <div id="overview-status" class="meta">—</div>
+        <div id="overview-health" class="meta"></div>
+        <p class="hint">
+          Phone PWA (same Wi‑Fi): open the Vite URL on port
+          <strong>5173</strong>, set Relay to port <strong>8787</strong>.
+        </p>
+        <p id="lan-hint" class="hint"></p>
+      </div>
+    </section>
+
+    <section id="tab-pair" class="panel">
+      <div class="card">
+        <h2>Pair phone</h2>
+        <p class="hint">Relay must be running. Code expires in ~10 minutes.</p>
+        <button type="button" id="btn-pair" class="btn accent">
+          Generate code
+        </button>
+        <div id="pair-result" class="pair-box hidden"></div>
+      </div>
+    </section>
+
+    <section id="tab-devices" class="panel">
+      <div class="card">
+        <h2>Paired devices</h2>
+        <button type="button" id="btn-refresh-devices" class="btn muted">
+          Refresh
+        </button>
+        <div id="device-list" class="list"></div>
+      </div>
+    </section>
+
+    <section id="tab-projects" class="panel">
+      <div class="card">
+        <h2>Cursor projects</h2>
+        <p class="hint">
+          Enable installs the shell gate hook for that folder.
+        </p>
+        <button type="button" id="btn-refresh-projects" class="btn muted">
+          Refresh
+        </button>
+        <div id="project-list" class="list"></div>
+      </div>
+    </section>
+
+    <section id="tab-logs" class="panel">
+      <div class="card">
+        <h2>Logs</h2>
+        <p class="hint">Read-only process output (and daemon file tail).</p>
+        <div class="log-toolbar">
+          <button type="button" id="btn-logs-refresh" class="btn muted">
+            Refresh
+          </button>
+          <button type="button" id="btn-restart-all" class="btn">
+            Restart all
+          </button>
+          <button type="button" id="btn-restart-relay" class="btn muted">
+            Restart relay
+          </button>
+          <button type="button" id="btn-restart-daemon" class="btn muted">
+            Restart daemon
+          </button>
+        </div>
+        <div class="log-cols">
+          <div class="log-pane">
+            <div class="log-head">Relay</div>
+            <pre id="log-relay" class="log-view"></pre>
+          </div>
+          <div class="log-pane">
+            <div class="log-head">Daemon</div>
+            <pre id="log-daemon" class="log-view"></pre>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tab-settings" class="panel">
+      <div class="card">
+        <h2>Settings</h2>
+        <label class="switch-row">
+          <span>Phone shell approvals</span>
+          <input type="checkbox" id="chk-phone" />
+        </label>
+        <p class="hint">
+          Off: Cursor prompts on the PC. On: phone (while PWA is live).
+        </p>
+        <div id="settings-meta" class="meta"></div>
+        <button type="button" id="btn-quit" class="btn danger">
+          Quit Companion
+        </button>
+      </div>
+    </section>
+
+    <p id="toast" class="toast hidden"></p>
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,58 @@
+{
+  "name": "@companion/desktop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Companion Desktop — tray app (relay + daemon + ops UI)",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder --win"
+  },
+  "dependencies": {
+    "@companion/daemon": "0.1.0",
+    "@companion/relay": "0.1.0"
+  },
+  "devDependencies": {
+    "electron": "^34.0.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.companion.desktop",
+    "productName": "Companion",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "src/**/*",
+      "renderer/**/*",
+      "assets/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "../daemon",
+        "to": "daemon",
+        "filter": ["bin/**", "src/**", "package.json"]
+      },
+      {
+        "from": "../relay",
+        "to": "relay",
+        "filter": ["bin/**", "src/**", "package.json"]
+      },
+      {
+        "from": "../shared",
+        "to": "shared",
+        "filter": ["dist/**", "package.json"]
+      }
+    ],
+    "win": {
+      "target": ["nsis"],
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

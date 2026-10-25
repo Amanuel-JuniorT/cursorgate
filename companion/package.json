@@ -11,6 +11,7 @@
     "dev:relay": "npm run dev -w @companion/relay",
     "dev:daemon": "npm run dev -w @companion/daemon",
     "dev:pwa": "npm run dev -w @companion/pwa",
+    "dev:desktop": "npm run start -w @companion/desktop",
     "start:relay": "npm run start -w @companion/relay",
     "start:daemon": "npm run start -w @companion/daemon",
     "test": "npm run test -w @companion/shared && npm run test -w @companion/daemon && npm run test -w @companion/relay",

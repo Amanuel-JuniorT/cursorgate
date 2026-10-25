@@ -21,6 +21,22 @@ companion/
 
 ## Quick start (Windows)
 
+### Option A — Desktop tray app (v0.5)
+
+Stops the need for multiple terminals (stop any manual relay/daemon first):
+
+```powershell
+cd companion
+npm install
+npm run build -w @companion/shared
+npm run dev:desktop
+```
+
+Tray icon → Open Companion for pair / devices / settings / projects.  
+Still run the phone PWA separately: `npm run dev:pwa`.
+
+### Option B — Manual terminals
+
 ```powershell
 cd companion
 npm install
