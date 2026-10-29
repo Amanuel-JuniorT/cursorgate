@@ -1,0 +1,11 @@
+node_modules
+**/node_modules
+.git
+**/release
+**/.env
+**/.env.*
+packages/desktop/release
+packages/pwa/dist
+packages/pwa/dev-dist
+packages/shared/dist
+.cursor

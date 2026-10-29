@@ -17,14 +17,30 @@ import {
   snapshot,
 } from "./api.js";
 
-/** Default relay = same host as this PWA, port 8787 (unless saved). */
+/**
+ * Default relay URL:
+ * - HTTPS / Fly / same-origin PWA → location.origin
+ * - Vite dev (:5173) → same host, port 8787
+ */
 function defaultRelayUrl() {
   try {
     const u = new URL(window.location.href);
-    u.port = "8787";
-    u.pathname = "/";
-    u.search = "";
-    u.hash = "";
+    const port = u.port || (u.protocol === "https:" ? "443" : "80");
+    if (
+      u.protocol === "https:" ||
+      port === "8787" ||
+      port === "443" ||
+      port === "80"
+    ) {
+      return u.origin;
+    }
+    if (port === "5173") {
+      u.port = "8787";
+      u.pathname = "/";
+      u.search = "";
+      u.hash = "";
+      return u.origin;
+    }
     return u.origin;
   } catch {
     return "http://127.0.0.1:8787";

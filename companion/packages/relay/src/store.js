@@ -6,6 +6,9 @@ const os = require("os");
 const { seal, open } = require("./atRest.js");
 
 function defaultDataDir() {
+  if (process.env.COMPANION_DATA_DIR) {
+    return path.resolve(process.env.COMPANION_DATA_DIR);
+  }
   return path.join(os.homedir(), ".companion", "relay");
 }
 

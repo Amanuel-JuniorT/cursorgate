@@ -5,8 +5,12 @@ const { WebSocketServer } = require("ws");
 const { MSG, envelope, PROTOCOL_VERSION } = require("@companion/shared");
 const { Store } = require("./store.js");
 const { ensureVapid, notifyAll } = require("./push.js");
+const { tryServePwa, pwaStatus } = require("./staticPwa.js");
 
-const PORT = Number(process.env.COMPANION_RELAY_PORT || 8787);
+// Fly sets PORT; local default remains 8787
+const PORT = Number(
+  process.env.PORT || process.env.COMPANION_RELAY_PORT || 8787
+);
 const HOST = process.env.COMPANION_RELAY_HOST || "0.0.0.0";
 
 function readJson(req) {
@@ -86,37 +90,26 @@ function main() {
     const url = new URL(req.url || "/", `http://${req.headers.host || "localhost"}`);
 
     try {
-      // Root is API-only — browsers often open :8787 by mistake instead of the PWA (:5173).
+      // Prefer built PWA on same origin (Fly HTTPS or local dist)
+      if (tryServePwa(req, res, url.pathname)) return;
+
       if (req.method === "GET" && (url.pathname === "/" || url.pathname === "")) {
-        const host = (req.headers.host || `localhost:${PORT}`).split(":")[0];
-        const pwaHint = `http://${host}:5173/`;
-        const accept = String(req.headers.accept || "");
-        if (accept.includes("text/html")) {
-          const html = `<!doctype html><html><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Companion Relay</title>
-<style>body{font-family:system-ui,sans-serif;background:#0f1419;color:#e7eef8;padding:24px;line-height:1.5}a{color:#3d9cf0}code{background:#1a2332;padding:2px 6px;border-radius:6px}</style></head><body>
-<h1>Companion relay (API)</h1>
-<p>This is not the phone app. Open the <strong>PWA</strong> instead:</p>
-<p><a href="${pwaHint}">${pwaHint}</a></p>
-<p>In the Pair screen, set Relay URL to:<br/><code>http://${host}:${PORT}</code></p>
-<p>Health check: <a href="/health">/health</a></p>
-</body></html>`;
-          res.writeHead(200, {
-            "Content-Type": "text/html; charset=utf-8",
-            "Access-Control-Allow-Origin": "*",
-          });
-          return res.end(html);
-        }
+        const host = req.headers.host || `localhost:${PORT}`;
+        const pwa = pwaStatus();
         return sendJson(res, 200, {
           ok: true,
           service: "companion-relay",
-          hint: "This is the API, not the PWA. Open the Vite app on port 5173, then set Relay URL to this host:8787",
-          pwa: pwaHint,
-          relay: `http://${host}:${PORT}`,
+          hint: pwa.served
+            ? "PWA is served from this origin"
+            : "Build the PWA (npm run build -w @companion/pwa) or set COMPANION_PWA_DIST",
+          pwaServed: pwa.served,
+          relay: `http://${host}`,
           health: "/health",
         });
       }
 
       if (req.method === "GET" && url.pathname === "/health") {
+        const pwa = pwaStatus();
         return sendJson(res, 200, {
           ok: true,
           v: PROTOCOL_VERSION,
@@ -124,6 +117,7 @@ function main() {
           liveDevices: store.liveDeviceCount(),
           pendingApprovals: store.pendingApprovals().length,
           phoneApprovals: store.getSettings().phoneApprovals,
+          pwaServed: pwa.served,
         });
       }
 
@@ -585,6 +579,8 @@ function main() {
         return sendJson(res, 200, { daemonToken });
       }
 
+      if (tryServePwa(req, res, url.pathname)) return;
+
       sendJson(res, 404, { error: "not found" });
     } catch (e) {
       console.error(e);
@@ -659,8 +655,10 @@ function main() {
   });
 
   server.listen(PORT, HOST, () => {
+    const pwa = pwaStatus();
     console.log(`companion-relay listening on http://${HOST}:${PORT}`);
-    console.log(`daemon token file: ${require("path").join(require("os").homedir(), ".companion", "relay", "state.json")}`);
+    console.log(`data dir: ${store.dir}`);
+    console.log(`pwa: ${pwa.served ? pwa.path : "not found"}`);
     console.log(`VAPID public key ready (${vapid.publicKey.slice(0, 12)}…)`);
   });
 
